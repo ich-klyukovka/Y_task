@@ -106,8 +106,25 @@
    ```bash
    computer_club.exe input.txt
    ```
-
 Запуск тестов
    ```bash
    computer_club_tests.exe
    ```
+
+
+Примеры входных данных находятся в папке tests. Формат - .txt
+
+
+
+
+Если программа не компилируется - попробуйте убрать Google Tests из файла CMakeLists.txt
+Необходимо удалить строки
+```bash
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
+file(GLOB TEST_SOURCES "tests/*.cpp")
+add_executable(computer_club_tests ${TEST_SOURCES} ${CORE_SOURCES})
+target_link_libraries(computer_club_tests ${GTEST_LIBRARIES} pthread)
+```
+Удалить папку build и повторить все шаги сборки без установки Google Tests
