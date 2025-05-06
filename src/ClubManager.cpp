@@ -62,6 +62,12 @@ void ClubManager::handleClientWait(const Event& event) { // событие - к�
         ErrorHandler::printError(event.getTime(), "ClientUnknown"); // обработка ошибки
         return; // пропуск действия
     }
+
+    if (clients.getClientEvent(event.getClient()).getTable() != 0) { // если клиент уже сидит за столом, то вставать в очередь нельзя
+        ErrorHandler::printError(event.getTime(), "ClientAlreadySeated"); // генерируется ошибка
+        return;
+    }
+    
     if (tables.getFreeTableCount() > 0) { // если имеются пустые столы, то генерируется ошибка
         ErrorHandler::printError(event.getTime(), "ICanWaitNoLonger!");
         return;
